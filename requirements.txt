@@ -1,5 +1,6 @@
 huggingface_hub==0.23.*
 gradio==4.39.*
-torch==2.4.*
+torch
 transformers==4.43.*
 accelerate==0.33.*
+cssutils
