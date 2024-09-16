@@ -156,6 +156,11 @@ def check_css_validity(css_string):
         return False, str(e)  # Invalid CSS with error message
 
 with gr.Blocks(css=custom_css) as demo:
+
+    gr.Markdown("<h1 style='text-align: center;'>Gradio Playground</h1>")
+    gr.Markdown("Try Gradio Components Styles or Chat with chatbot to find more style possibilities!")
+
+
     with gr.Row():
         with gr.Column(elem_classes="black-border"):
             with gr.Column(elem_classes="black-border"):
