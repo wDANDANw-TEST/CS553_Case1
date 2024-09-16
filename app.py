@@ -68,6 +68,9 @@ def respond(
     prompt = create_prompt_from_messages(messages)
     response = ""
 
+    # Initialize the main chatbot with only the latest exchange
+    chatbot_output = [(message, "")]
+
     if use_local_model:
         from transformers import AutoModelForCausalLM, AutoTokenizer, TextIteratorStreamer
         import threading
@@ -102,12 +105,13 @@ def respond(
                 if stop_inference:
                     break
                 response += token
-                history[-1] = (message, response)
-                yield history, history, ""  # Yield updated history and clear input
+                # Update the main chatbot with the latest exchange
+                chatbot_output = [(message, response)]
+                yield chatbot_output, history, ""  # Yield updated chatbot, history remains unchanged, clear input
         except Exception as e:
             response = f"An error occurred: {str(e)}"
-            history[-1] = (message, response)
-            yield history, history, ""
+            chatbot_output = [(message, response)]
+            yield chatbot_output, history, ""
             return
 
         thread.join()
@@ -121,16 +125,22 @@ def respond(
             temperature=temperature,
             top_p=top_p,
         ):
-            
             if stop_inference:
                 response = "Inference cancelled."
-                history[-1] = (message, response)
-                yield history, history, ""  # Update chatbot and clear input
+                chatbot_output = [(message, response)]
+                yield chatbot_output, history, ""  # Update chatbot, history remains unchanged, clear input
                 return
             token = message_chunk.get('choices', [{}])[0].get('delta', {}).get('content', '')
             response += token
-            history[-1] = (message, response)
-            yield history, history, ""  # Yield updated history and clear input
+            # Update the main chatbot with the latest exchange
+            chatbot_output = [(message, response)]
+            yield chatbot_output, history, ""  # Yield updated chatbot, history remains unchanged, clear input
+
+    # After completion, append the exchange to history
+    history.append((message, response))
+    # Update the main chatbot with the latest exchange
+    chatbot_output = [(message, response)]
+    yield chatbot_output, history, ""  # Final yield
 
 # Function to cancel inference
 def cancel_inference():
