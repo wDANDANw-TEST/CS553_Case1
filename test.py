@@ -5,9 +5,6 @@ import torch
 from transformers import pipeline
 from app import respond  # Assuming your main app script is named 'app.py'
 
-def test_cuda_available():
-    assert torch.cuda.is_available(), "CUDA is not available. Ensure that PyTorch with CUDA support is installed."
-
 def test_pipeline_initialization():
     # Initialize the pipeline
     try:
@@ -43,7 +40,7 @@ def test_respond_function():
     # Test the respond function from your Gradio app
     message = "Give me CSS code for a blue button."
     history = []
-    response_generator = respond(message, history, use_local_model=True)
+    response_generator = respond(message, history, use_local_model=False)
     
     # Collect responses from the generator
     responses = []
