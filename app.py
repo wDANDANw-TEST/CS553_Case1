@@ -11,7 +11,7 @@ import os
 stop_inference = False
 
 # Inference client setup
-client = InferenceClient("HuggingFaceH4/zephyr-7b-beta", token=os.environ["HF_ACCESS_TOKEN"])
+client = InferenceClient("HuggingFaceH4/zephyr-7b-beta", token=os.getenv("HF_ACCESS_TOKEN"))
 pipe = pipeline(
     "text-generation",
     "microsoft/Phi-3-mini-4k-instruct",

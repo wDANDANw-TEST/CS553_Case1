@@ -23,5 +23,4 @@ jobs:
         env:
           HF_ACCESS_TOKEN: ${{ secrets.HF_ACCESS_TOKEN }}
         run: |
-          # Run the Python script that sets the environment variable
-          python set_env.py
+          echo "HF_ACCESS_TOKEN=${{ secrets.HF_ACCESS_TOKEN }}" > .env

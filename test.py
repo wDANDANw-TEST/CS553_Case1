@@ -8,7 +8,7 @@ import os
 
 def test_env_token():
     try:
-        token=os.environ["HF_ACCESS_TOKEN"]
+        token=os.getenv("HF_ACCESS_TOKEN")
         assert token is not None and token is not "" 
     except Exception as e:
         pytest.fail(f"Env Token Did not Get In: {e}")
