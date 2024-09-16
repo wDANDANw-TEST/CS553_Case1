@@ -17,13 +17,7 @@ jobs:
       with:
         fetch-depth: 0
         lfs: true  # If using large files
-
-    - name: Import Environment
-      env:
-        HF_ACCESS_TOKEN: ${{ secrets.HF_ACCESS_TOKEN }}
-      run: |
-        export HF_ACCESS_TOKEN=$HF_ACCESS_TOKEN
-
+        
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
