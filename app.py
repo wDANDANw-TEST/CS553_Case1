@@ -5,12 +5,13 @@ from transformers import pipeline
 
 import cssutils
 from css import custom_css, code_placeholder, css_placeholder
+import os
 
 # Global flag to handle cancellation
 stop_inference = False
 
 # Inference client setup
-client = InferenceClient("HuggingFaceH4/zephyr-7b-beta")
+client = InferenceClient("HuggingFaceH4/zephyr-7b-beta", token=os.environ["HF_ACCESS_TOKEN"])
 pipe = pipeline(
     "text-generation",
     "microsoft/Phi-3-mini-4k-instruct",
@@ -65,6 +66,7 @@ def respond(
 
     # Create prompt from messages
     prompt = create_prompt_from_messages(messages)
+    response = ""
 
     if use_local_model:
         from transformers import AutoModelForCausalLM, AutoTokenizer, TextIteratorStreamer
@@ -95,7 +97,6 @@ def respond(
         thread = threading.Thread(target=model.generate, kwargs=generation_kwargs)
         thread.start()
 
-        response = ""
         try:
             for token in streamer:
                 if stop_inference:
@@ -120,6 +121,7 @@ def respond(
             temperature=temperature,
             top_p=top_p,
         ):
+            
             if stop_inference:
                 response = "Inference cancelled."
                 history[-1] = (message, response)

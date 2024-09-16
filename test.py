@@ -4,6 +4,14 @@ import pytest
 import torch
 from transformers import pipeline
 from app import respond  # Assuming your main app script is named 'app.py'
+import os
+
+def test_env_token():
+    try:
+        token=os.environ["HF_ACCESS_TOKEN"]
+        assert token is not None and token is not "" 
+    except Exception as e:
+        pytest.fail(f"Env Token Did not Get In: {e}")
 
 def test_pipeline_initialization():
     # Initialize the pipeline
