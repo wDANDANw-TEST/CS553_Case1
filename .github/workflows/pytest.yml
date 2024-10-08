@@ -1,27 +1,27 @@
-name: Deploy and Pytest to Hugging Face Spaces
+# name: Deploy and Pytest to Hugging Face Spaces
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
+# on:
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
+#   workflow_dispatch:
 
-jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
+# jobs:
+#   build-and-test:
+#     runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-        lfs: true  # If using large files
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v3
+#       with:
+#         fetch-depth: 0
+#         lfs: true  # If using large files
         
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
+#     - name: Install dependencies
+#       run: |
+#         pip install -r requirements.txt
 
-    - name: Run Pytest
-      run: |
-        pytest test.py
+#     - name: Run Pytest
+#       run: |
+#         pytest test.py
