@@ -19,6 +19,7 @@ check_ssh() {
     local key="$1"
     local user="$2"
     local machine="$3"
+    local port="$4"
 
     echo "Checking SSH connection to $user@$machine..."
 
@@ -27,7 +28,7 @@ check_ssh() {
 
     # Include port if PORT variable is set and not empty
     if [ -n "$port" ]; then
-        ssh_command="$ssh_command -p \"$port\""
+        ssh_command="$ssh_command -p $port"
     fi
 
     # Complete the SSH command

@@ -26,7 +26,7 @@ prepare_remote() {
     ssh -i "$key_using" -p "$PORT" "$PRESET_USER@$MACHINE" bash setup_user.sh "$USER" "$PRESET_USER" \
         "'$CUSTOM_PUB_KEY_CONTENT'" "'$PRESET_PUB_KEY_CONTENT'" "$need_to_remove_preset_key" "$SETUP_DIR"
 
-    echo "Setup completed. Please run the script again to connect using CUSTOM_KEY."
+    echo "Setup completed. Please run the script again to connect using $CUSTOM_KEY."
     exit 0
 }
 
@@ -34,20 +34,20 @@ prepare_remote() {
 AUTO_REMOVE=${1:-"n"}
 
 # Attempt to SSH using CUSTOM_KEY
-echo "Attempting to connect using CUSTOM_KEY..."
-if check_ssh "$CUSTOM_KEY" "$USER" "$MACHINE"; then
+echo "Attempting to connect using $CUSTOM_KEY..."
+if check_ssh "$CUSTOM_KEY" "$USER" "$MACHINE" "$PORT"; then
     ssh -i "$CUSTOM_KEY" -p "$PORT" "$USER@$MACHINE"
 else
-    echo "Failed to connect with CUSTOM_KEY."
+    echo "Failed to connect with $CUSTOM_KEY."
     echo "Attempting to connect using PRESET_KEY as $PRESET_USER..."
 
-    if check_ssh "$CUSTOM_KEY" "$PRESET_USER" "$MACHINE"; then
-        echo "Connected successfully with CUSTOM_KEY as $PRESET_USER."
+    if check_ssh "$CUSTOM_KEY" "$USER" "$MACHINE" "$PORT"; then
+        echo "Connected successfully with CUSTOM_KEY $CUSTOM_KEY as $PRESET_USER."
         
         prepare_remote "y" "$CUSTOM_KEY"
 
-    elif check_ssh "$PRESET_KEY" "$PRESET_USER" "$MACHINE"; then
-        echo "Connected successfully with PRESET_KEY as $PRESET_USER."
+    elif check_ssh "$CUSTOM_KEY" "$USER" "$MACHINE" "$PORT"; then
+        echo "Connected successfully with PRESET_KEY $PRESET_KEY as $PRESET_USER."
 
         # Check if running in script mode (no prompting)
         if [ "$AUTO_REMOVE" == "yes" ]; then
