@@ -24,7 +24,7 @@ check_ssh() {
     echo "Checking SSH connection to $user@$machine..."
 
     # Build the SSH command
-    ssh_command="ssh -i \"$key\" -o BatchMode=yes -o ConnectTimeout=5"
+    ssh_command="ssh -i \"$key\""
 
     # Include port if PORT variable is set and not empty
     if [ -n "$port" ]; then
@@ -32,16 +32,16 @@ check_ssh() {
     fi
 
     # Complete the SSH command
-    ssh_command="$ssh_command \"$user@$machine\" 'exit'"
+    ssh_command="$ssh_command -o BatchMode=yes -o ConnectTimeout=5 \"$user@$machine\" 'exit'"
 
     # Execute the SSH command
     eval "$ssh_command" &>/dev/null
 
     if [ $? -ne 0 ]; then
-        echo "check_ssh: SSH connection to $user@$machine failed."
+        echo "check_ssh: SSH connection with $key to $user@$machine failed."
         return 1
     else
-        echo "check_ssh: SSH connection to $user@$machine successful."
+        echo "check_ssh: SSH connection with $key to $user@$machine successful."
         return 0
     fi
 }

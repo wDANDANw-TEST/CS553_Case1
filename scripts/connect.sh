@@ -41,12 +41,12 @@ else
     echo "Failed to connect with $CUSTOM_KEY."
     echo "Attempting to connect using PRESET_KEY as $PRESET_USER..."
 
-    if check_ssh "$CUSTOM_KEY" "$USER" "$MACHINE" "$PORT"; then
+    if check_ssh "$CUSTOM_KEY" "$PRESET_USER" "$MACHINE" "$PORT"; then
         echo "Connected successfully with CUSTOM_KEY $CUSTOM_KEY as $PRESET_USER."
         
         prepare_remote "y" "$CUSTOM_KEY"
 
-    elif check_ssh "$CUSTOM_KEY" "$USER" "$MACHINE" "$PORT"; then
+    elif check_ssh "$PRESET_KEY" "$PRESET_USER" "$MACHINE" "$PORT"; then
         echo "Connected successfully with PRESET_KEY $PRESET_KEY as $PRESET_USER."
 
         # Check if running in script mode (no prompting)

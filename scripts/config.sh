@@ -2,15 +2,10 @@
 
 # Common Variables
 
-# MACHINE="paffenroth-23.dyn.wpi.edu"
-# PORT=22022                             
-# USER="raph"
-# PRESET_USER="student-admin"
-
-MACHINE="20.0.50.101"
-PORT=22                             
-USER="test"
-PRESET_USER="raph"
+MACHINE="paffenroth-23.dyn.wpi.edu"
+PORT=22022                             
+USER="raph"
+PRESET_USER="student-admin"
 
 KEYS_FOLDER="../keys"
 CUSTOM_KEY="$KEYS_FOLDER/wpi"
