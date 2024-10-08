@@ -293,4 +293,6 @@ with gr.Blocks(css=custom_css) as demo:
         outputs=chat_history
     )
 
-demo.launch()
+
+if __name__ == "__main__":
+    demo.launch()
