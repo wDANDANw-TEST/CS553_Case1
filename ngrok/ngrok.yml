@@ -1,0 +1,7 @@
+version: "2"
+authtoken: 2ohAFgUUPk3XPTtPsnbUX0fTaFD_3GGCABXfp1TrdxGfNLfjy
+tunnels:
+  gradio_app:
+    addr: gradio_app:7860
+    proto: http
+    inspect: true

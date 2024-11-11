@@ -1,8 +1,0 @@
-huggingface_hub==0.23.*
-gradio==4.43.0
-torch
-transformers==4.43.*
-accelerate==0.33.*
-cssutils
-pytest
-python-dotenv
